@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask import render_template
+from io import BytesIO
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import numpy as np
@@ -45,7 +46,7 @@ def predict():
         return jsonify({'error': 'Empty file name'}), 400
 
     try:
-        img = image.load_img(file, target_size=(224, 224))  # adjust size to your model
+        img = image.load_img(BytesIO(file.read()), target_size=(224, 224))
         img_array = image.img_to_array(img)
         img_array = np.expand_dims(img_array, axis=0) / 255.0  # normalize
 
@@ -59,6 +60,7 @@ def predict():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
 
 @app.route('/')
 def index():
