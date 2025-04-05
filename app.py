@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask import render_template
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import numpy as np
@@ -59,10 +60,9 @@ def predict():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# Health check
 @app.route('/')
 def index():
-    return "🚀 Plant Disease Detection API is running!"
+    return render_template('index.html')
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))  # fallback to 10000 only locally
