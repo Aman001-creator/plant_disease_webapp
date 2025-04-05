@@ -1,13 +1,17 @@
 from flask import Flask, render_template, request
 from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing import image
+from PIL import Image
 import numpy as np
-import os
+import io
+import os  # ← Added to get environment PORT
 
 app = Flask(__name__)
-model = load_model("mobnet_fine_tuned_model.keras")  # Make sure your model file is named correctly
 
-classes = [
+# Load your model
+model = load_model('plant_disease_model.h5')
+
+# Define class names based on your model
+class_names = [
     'Apple___Apple_scab',
     'Apple___Black_rot',
     'Apple___Cedar_apple_rust',
@@ -27,37 +31,27 @@ classes = [
     'Tomato___Late_blight',
     'Tomato___Tomato_Yellow_Leaf_Curl_Virus',
     'Tomato___healthy'
-]  # Update with your actual classes
+]  # change as needed
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+def preprocess(img):
+    img = img.resize((224, 224))  # change if your model uses a different size
+    img_array = np.array(img) / 255.0
+    img_array = np.expand_dims(img_array, axis=0)
+    return img_array
 
-@app.route('/predict', methods=['POST'])
-def predict():
-    if 'file' not in request.files:
-        return "No file part"
-    file = request.files['file']
-    if file.filename == '':
-        return "No selected file"
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    prediction = None
+    if request.method == 'POST':
+        file = request.files['image']
+        if file:
+            img = Image.open(io.BytesIO(file.read()))
+            img = preprocess(img)
+            pred = model.predict(img)
+            prediction = class_names[np.argmax(pred)]
+    return render_template('index.html', prediction=prediction)
 
-    # Save the uploaded file
-    filepath = os.path.join('static', file.filename)
-    file.save(filepath)
-
-    # Load and preprocess the image
-    img = image.load_img(filepath, target_size=(224, 224))  # Change size to match your model
-    img_array = image.img_to_array(img)
-    img_array = np.expand_dims(img_array, axis=0) / 255.0
-
-    prediction = model.predict(img_array)
-    predicted_class = classes[np.argmax(prediction)]
-
-    confidence = round(100 * np.max(prediction), 2)
-
-    return f"<h2>Prediction: {predicted_class} ({confidence}% confidence)</h2><img src='/{filepath}' width='300'>"
 
 if __name__ == '__main__':
-    import os
-    port = int(os.environ.get('PORT', 10000))
+    port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=True)
