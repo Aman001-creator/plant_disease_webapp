@@ -8,7 +8,7 @@ import os  # ← Added to get environment PORT
 app = Flask(__name__)
 
 # Load your model
-model = load_model('plant_disease_model.h5')
+model = load_model('mobnet_fine_tuned_model.keras')
 
 # Define class names based on your model
 class_names = [
