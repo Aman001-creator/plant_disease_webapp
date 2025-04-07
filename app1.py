@@ -4,19 +4,9 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import numpy as np
 from PIL import Image
-import matplotlib.pyplot as plt
-import io
-import base64
 
-# Set page config
-st.set_page_config(page_title="Plant Disease Detector 🌿", layout="centered")
-
-# Load model once
-@st.cache_resource
-def load_my_model():
-    return load_model("mobnet_fine_tuned_model.keras")
-
-model = load_my_model()
+# Load the model once
+model = load_model("mobnet_fine_tuned_model.keras")
 
 # Class names
 class_names = [
@@ -42,71 +32,45 @@ class_names = [
 ]
 
 # Sidebar navigation
-st.sidebar.title("🌿 Navigation")
-selection = st.sidebar.radio("Go to", ["Prediction", "About"])
+st.sidebar.title("Navigation")
+page = st.sidebar.radio("Go to", ["Home", "About"])
 
-if selection == "About":
-    st.title("🧬 Plant Disease Detection")
-    st.markdown("""
-        This AI-powered app identifies **plant diseases** from leaf images 🌿 using a fine-tuned MobileNet model.  
-        It supports various crops like Apple, Corn, Grape, Potato, and Tomato.  
-        **Upload an image** of a leaf to get started!
-
-        **👨‍💻 Model Info**:
-        - Model: MobileNetV2
-        - Trained on: PlantVillage dataset
-        - Accuracy: ~98%
-
-        Created with ❤️ using Streamlit.
-    """)
-    st.info("Try uploading a leaf image from a plant affected by disease!")
-
-elif selection == "Prediction":
-    # Title
+# Home page
+if page == "Home":
     st.title("🌿 Plant Disease Detection")
-    st.markdown("Upload an image of a plant leaf to detect the disease using deep learning.")
-
-    # File uploader
     uploaded_file = st.file_uploader("Upload a leaf image", type=["jpg", "jpeg", "png"])
 
     if uploaded_file is not None:
-        # Display uploaded image
         img = Image.open(uploaded_file)
         st.image(img, caption="Uploaded Image", use_column_width=True)
 
         if st.button("Predict"):
-            # Preprocess image
-            img_resized = img.resize((224, 224))
-            img_array = image.img_to_array(img_resized)
+            # Preprocess the image
+            img = img.resize((224, 224))
+            img_array = image.img_to_array(img)
             img_array = np.expand_dims(img_array, axis=0) / 255.0
 
-            # Prediction
+            # Run prediction
             predictions = model.predict(img_array)
             predicted_class = class_names[np.argmax(predictions[0])]
             confidence = float(np.max(predictions[0]))
 
             # Display result
-            st.success(f"🌱 **Prediction**: `{predicted_class}`")
-            st.info(f"🔍 **Confidence**: `{confidence * 100:.2f}%`")
+            st.success(f"🌱 Prediction: **{predicted_class}**")
+            st.info(f"Confidence: **{confidence * 100:.2f}%**")
 
-            # Show confidence bar
-            st.progress(min(int(confidence * 100), 100))
+# About page
+elif page == "About":
+    st.title("📘 About This App")
 
-            # Plot all class probabilities
-            st.subheader("🔬 Class Probabilities")
-            fig, ax = plt.subplots(figsize=(10, 6))
-            y_pos = np.arange(len(class_names))
-            ax.barh(y_pos, predictions[0], align="center", color="green")
-            ax.set_yticks(y_pos)
-            ax.set_yticklabels(class_names)
-            ax.invert_yaxis()
-            ax.set_xlabel("Probability")
-            st.pyplot(fig)
+    st.header("🔍 Purpose")
+    st.write("""
+    This app is designed to help farmers, researchers, and plant enthusiasts detect diseases in plant leaves using a deep learning model.
+    Just upload an image of a leaf, and the model will identify the disease if present.
+    """)
 
-            # Offer download of image with prediction
-            buf = io.BytesIO()
-            img.save(buf, format="PNG")
-            byte_im = buf.getvalue()
-            b64 = base64.b64encode(byte_im).decode()
-            href = f'<a href="data:file/png;base64,{b64}" download="leaf.png">📥 Download Uploaded Image</a>'
-            st.markdown(href, unsafe_allow_html=True)
+    st.header("🧠 Model Info")
+    st.write("""
+    The model used in this application is a fine-tuned version of MobileNet, trained on the PlantVillage dataset.
+    It can detect diseases in crops like apple, corn, grape, potato, and tomato with high accuracy.
+    """)
