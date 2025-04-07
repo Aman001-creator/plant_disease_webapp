@@ -48,26 +48,41 @@ page = st.sidebar.selectbox("", ["Home", "About"])
 if page == "Home":
     st.header("🌿 PLANT DISEASE DETECTION SYSTEM")
 
-    # Scrollable Image Gallery
+    # Scrollable auto-scrolling image gallery
+
     first_image_path = image_paths[0]
     img_base64 = image_to_base64(first_image_path)
-    images_html = f'<img src="data:image/png;base64,{img_base64}" style="height: 150px; border-radius: 10px;">'
+    images_html = f'<img src="data:image/png;base64,{img_base64}" alt="Image" class="image" style="height: 150px; border-radius: 10px; margin-right: 10px;">'
 
     remaining_images = image_paths[1:]
     random.shuffle(remaining_images)
 
-    for img_path in remaining_images:
-        img_base64 = image_to_base64(img_path)
-        images_html += f'<img src="data:image/png;base64,{img_base64}" style="height: 150px; border-radius: 10px;">'
+    for image_path in remaining_images:
+        img_base64 = image_to_base64(image_path)
+        images_html += f'<img src="data:image/png;base64,{img_base64}" alt="Image" class="image" style="height: 150px; border-radius: 10px; margin-right: 10px;">'
 
     scrolling_html = f"""
-    <div style="display: flex; overflow-x: auto; padding: 10px; gap: 10px; scroll-behavior: smooth;">
-        {images_html}
+    <div style="position: relative; height: 180px; overflow: hidden;">
+        <style>
+            .scrolling-wrapper {{
+                display: flex;
+                animation: scroll 30s linear infinite;
+            }}
+
+            @keyframes scroll {{
+                0% {{ transform: translateX(100%); }}
+                100% {{ transform: translateX(-100%); }}
+            }}
+        </style>
+        <div class="scrolling-wrapper">
+            {images_html}
+        </div>
     </div>
     """
 
     st.markdown("### 🌱 Sample Leaves Gallery")
-    st.components.v1.html(scrolling_html, height=180)
+    st.components.v1.html(scrolling_html, height=200)
+
 
     # Upload or choose test image
     st.markdown("### 🖼️ Upload or Choose a Test Image")
