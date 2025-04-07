@@ -49,24 +49,25 @@ if page == "Home":
     st.header("🌿 PLANT DISEASE DETECTION SYSTEM")
 
     # Scrollable Image Gallery
-    first_image_path = image_paths[0]
-    img_base64 = image_to_base64(first_image_path)
-    images_html = f'<img src="data:image/png;base64,{img_base64}" style="height: 150px; border-radius: 10px; margin-right: 10px;">'
+first_image_path = image_paths[0]
+img_base64 = image_to_base64(first_image_path)
+images_html = f'<img src="data:image/png;base64,{img_base64}" style="height: 150px; border-radius: 10px;">'
 
-    remaining_images = image_paths[1:]
-    random.shuffle(remaining_images)
+remaining_images = image_paths[1:]
+random.shuffle(remaining_images)
 
-    for img_path in remaining_images:
-        img_base64 = image_to_base64(img_path)
-        images_html += f'<img src="data:image/png;base64,{img_base64}" style="height: 150px; border-radius: 10px; margin-right: 10px;">'
+for img_path in remaining_images:
+    img_base64 = image_to_base64(img_path)
+    images_html += f'<img src="data:image/png;base64,{img_base64}" style="height: 150px; border-radius: 10px;">'
 
-    scrolling_html = f"""
-    <div style="overflow-x: scroll; white-space: nowrap;">
-        {images_html}
-    </div>
-    """
-    st.markdown("### 🌱 Sample Leaves Gallery")
-    st.components.v1.html(scrolling_html, height=180)
+scrolling_html = f"""
+<div style="display: flex; overflow-x: auto; padding: 10px; gap: 10px; scroll-behavior: smooth;">
+    {images_html}
+</div>
+"""
+
+st.markdown("### 🌱 Sample Leaves Gallery")
+st.components.v1.html(scrolling_html, height=180)
 
     # Upload or choose test image
     st.markdown("### 🖼️ Upload or Choose a Test Image")
