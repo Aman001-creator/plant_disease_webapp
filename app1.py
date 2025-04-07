@@ -55,4 +55,5 @@ if uploaded_file is not None:
 
         # Display result
         st.success(f"🌱 Prediction: **{predicted_class}**")
-        st.info(f"Confidence: **{confidence:.2f}**")
+        st.info(f"Confidence: **{confidence * 100:.2f}%**")
+
