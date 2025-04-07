@@ -5,9 +5,10 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 from PIL import Image
 
-# Load your model once
+# Load the model once
 model = load_model("mobnet_fine_tuned_model.keras")
 
+# Class names
 class_names = [
     'Apple___Apple_scab',
     'Apple___Black_rot',
@@ -30,23 +31,28 @@ class_names = [
     'Tomato___healthy'
 ]
 
-st.title("🌿 Plant Disease Prediction App")
+# App title
+st.title("🌿 Plant Disease Detection")
 
-uploaded_file = st.file_uploader("Upload an image of a leaf", type=["jpg", "jpeg", "png"])
+# Upload file
+uploaded_file = st.file_uploader("Upload a leaf image", type=["jpg", "jpeg", "png"])
 
+# Only show predict button if a file is uploaded
 if uploaded_file is not None:
     img = Image.open(uploaded_file)
     st.image(img, caption="Uploaded Image", use_column_width=True)
 
-    # Preprocess the image
-    img = img.resize((224, 224))
-    img_array = image.img_to_array(img)
-    img_array = np.expand_dims(img_array, axis=0) / 255.0
+    if st.button("Predict"):
+        # Preprocess the image
+        img = img.resize((224, 224))
+        img_array = image.img_to_array(img)
+        img_array = np.expand_dims(img_array, axis=0) / 255.0
 
-    # Predict
-    predictions = model.predict(img_array)
-    predicted_class = class_names[np.argmax(predictions[0])]
-    confidence = float(np.max(predictions[0]))
+        # Run prediction
+        predictions = model.predict(img_array)
+        predicted_class = class_names[np.argmax(predictions[0])]
+        confidence = float(np.max(predictions[0]))
 
-    st.success(f"🌱 Prediction: {predicted_class}")
-    st.info(f"Confidence: {confidence:.2f}")
+        # Display result
+        st.success(f"🌱 Prediction: **{predicted_class}**")
+        st.info(f"Confidence: **{confidence:.2f}**")
