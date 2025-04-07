@@ -4,8 +4,6 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import numpy as np
 from PIL import Image
-import warnings
-warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 
 # Load the model once
@@ -43,10 +41,7 @@ uploaded_file = st.file_uploader("Upload a leaf image", type=["jpg", "jpeg", "pn
 # Only show predict button if a file is uploaded
 if uploaded_file is not None:
     img = Image.open(uploaded_file)
-    st.image(image, caption="Uploaded Leaf Image", use_column_width=True)
-
-
-
+    st.image(img, caption="Uploaded Image", use_column_width=True)
     if st.button("Predict"):
         # Preprocess the image
         img = img.resize((224, 224))
