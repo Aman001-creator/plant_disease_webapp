@@ -40,7 +40,8 @@ uploaded_file = st.file_uploader("Upload a leaf image", type=["jpg", "jpeg", "pn
 # Only show predict button if a file is uploaded
 if uploaded_file is not None:
     img = Image.open(uploaded_file)
-    st.image(img, caption="Uploaded Image", use_column_width=True)
+    st.image(image, caption="Uploaded Leaf Image", use_container_width=True)
+
 
     if st.button("Predict"):
         # Preprocess the image
