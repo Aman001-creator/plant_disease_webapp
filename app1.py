@@ -32,8 +32,8 @@ class_names = [
 ]
 
 # Sidebar navigation
-st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Home", "About"])
+st.sidebar.title("MENU")
+app_mode = st.sidebar.selectbox("", ["Home", "About"])
 
 # Home page
 if page == "Home":
