@@ -48,33 +48,37 @@ page = st.sidebar.selectbox("", ["Home", "About"])
 if page == "Home":
     st.header("🌿 PLANT DISEASE DETECTION SYSTEM")
 
-    # Rearranged image order: start from 4th image
-    start_index = 3
-    reordered_images = image_paths[start_index:] + image_paths[:start_index]
+    # Create base64 HTML image string
+    first_image_path = image_paths[0]
+    img_base64 = image_to_base64(first_image_path)
+    images_html = f'<img src="data:image/png;base64,{img_base64}" alt="Image" class="image" style="height: 150px; border-radius: 10px; margin-right: 10px;">'
 
-    # Duplicate images for seamless scrolling
-    images_html = ""
-    for image_path in reordered_images + reordered_images:
+    remaining_images = image_paths[1:]
+    random.shuffle(remaining_images)
+
+    for image_path in remaining_images:
         img_base64 = image_to_base64(image_path)
         images_html += f'<img src="data:image/png;base64,{img_base64}" alt="Image" class="image" style="height: 150px; border-radius: 10px; margin-right: 10px;">'
 
-    # Scrollable HTML with smooth loop
+    # Duplicate for infinite scroll illusion
+    duplicated_images_html = images_html + images_html
+
     scrolling_html = f"""
-    <div style="width: 100%; overflow: hidden; height: 180px;">
+    <div style="position: relative; height: 180px; overflow: hidden; width: 100%;">
         <style>
-            .scroll-container {{
+            .scrolling-wrapper {{
                 display: flex;
-                width: max-content;
-                animation: scroll-left 40s linear infinite;
+                width: fit-content;
+                animation: scroll 40s linear infinite;
             }}
 
-            @keyframes scroll-left {{
-                0% {{ transform: translateX(0); }}
+            @keyframes scroll {{
+                0% {{ transform: translateX(0%); }}
                 100% {{ transform: translateX(-50%); }}
             }}
         </style>
-        <div class="scroll-container">
-            {images_html}
+        <div class="scrolling-wrapper">
+            {duplicated_images_html}
         </div>
     </div>
     """
@@ -85,7 +89,7 @@ if page == "Home":
     # Upload or choose test image
     st.markdown("### 🖼️ Upload or Choose a Test Image")
     uploaded_file = st.file_uploader("Upload a leaf image", type=["jpg", "jpeg", "png"])
-
+    
     st.write("Or choose one from test images below:")
     test_image_option = st.selectbox(
         "Select Test Image",
