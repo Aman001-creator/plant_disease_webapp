@@ -33,11 +33,11 @@ image_paths = [
 ]
 
 image_s = [
-    "Internet_Test_Image/apple_hy.jpeg",
-    "Internet_Test_Image/apple_sb.jpeg",
-    "Internet_Test_Image/Corn-cr.jpg",
-    "Internet_Test_Image/grape_br.jpeg",
-    "Internet_Test_Image/apple_cedar_ar.jpeg"
+    "apple_hy.jpeg",
+    "apple_sb.jpeg",
+    "Corn-cr.jpg",
+    "grape_br.jpeg",
+    "apple_cedar_ar.jpeg"
 ]
 
 # Sidebar navigation
