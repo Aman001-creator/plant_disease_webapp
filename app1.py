@@ -86,7 +86,6 @@ if page == "Home":
     st.components.v1.html(scrolling_html, height=200)
 
     # Upload or choose test image
-    st.markdown("### 🖼️ Upload or Choose a Test Image")
     uploaded_file = st.file_uploader("Upload a leaf image", type=["jpg", "jpeg", "png"])
     
     st.write("Or choose one from test images below:")
