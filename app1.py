@@ -37,7 +37,7 @@ page = st.sidebar.selectbox("", ["Home", "About"])
 
 # Home page
 if page == "Home":
-    st.title("🌿 Plant Disease Detection")
+    st.header("PLANT DISEASE DETECTION SYSTEM")
     uploaded_file = st.file_uploader("Upload a leaf image", type=["jpg", "jpeg", "png"])
 
     if uploaded_file is not None:
