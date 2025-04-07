@@ -83,7 +83,6 @@ if page == "Home":
     </div>
     """
 
-    st.markdown("### 🌱 Sample Leaves Gallery")
     st.components.v1.html(scrolling_html, height=200)
 
     # Upload or choose test image
