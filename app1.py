@@ -107,16 +107,17 @@ if page == "Home":
         st.image(img, caption="Selected Image", width=250)
 
         if st.button("🔍 Predict"):
-            img_resized = img.resize((224, 224))
-            img_array = image.img_to_array(img_resized)
-            img_array = np.expand_dims(img_array, axis=0) / 255.0
-
-            predictions = model.predict(img_array)
-            predicted_class = class_names[np.argmax(predictions[0])]
-            confidence = float(np.max(predictions[0]))
-
-            st.success(f"🌾 Prediction: **{predicted_class}**")
-            st.info(f"🧠 Confidence: **{confidence * 100:.2f}%**")
+           with st.spinner("Analyzing the leaf image..."):     
+                img_resized = img.resize((224, 224))
+                img_array = image.img_to_array(img_resized)
+                img_array = np.expand_dims(img_array, axis=0) / 255.0
+    
+                predictions = model.predict(img_array)
+                predicted_class = class_names[np.argmax(predictions[0])]
+                confidence = float(np.max(predictions[0]))
+    
+                st.success(f"🌾 Prediction: **{predicted_class}**")
+                st.info(f"🧠 Confidence: **{confidence * 100:.2f}%**")
 
 
 # About page
