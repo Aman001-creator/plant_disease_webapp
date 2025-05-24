@@ -106,8 +106,7 @@ if page == "Home":
 
         st.image(img, caption="Selected Image", width=250)
 
-        if st.button("🔍 Predict"):
-           with st.spinner("Analyzing the leaf image..."):     
+        if st.button("🔍 Predict"):    
                 img_resized = img.resize((224, 224))
                 img_array = image.img_to_array(img_resized)
                 img_array = np.expand_dims(img_array, axis=0) / 255.0
