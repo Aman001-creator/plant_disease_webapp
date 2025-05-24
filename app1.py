@@ -40,27 +40,123 @@ image_s = [
     "apple_cedar_ar.jpeg"
 ]
 
-# Cure steps dictionary
 cure_steps = {
-    'Apple___Apple_scab': "1. Prune infected leaves.\n2. Apply fungicide early in the season.\n3. Choose resistant apple varieties.",
-    'Apple___Black_rot': "1. Remove mummified fruit and dead wood.\n2. Apply a copper-based fungicide.\n3. Ensure good air circulation.",
-    'Apple___Cedar_apple_rust': "1. Remove nearby cedar trees.\n2. Use sulfur or myclobutanil sprays.\n3. Apply fungicide before symptoms appear.",
-    'Apple___healthy': "No action needed. The plant is healthy! ✅",
-    'Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot': "1. Rotate crops regularly.\n2. Use resistant hybrids.\n3. Apply fungicides at early signs.",
-    'Corn_(maize)___Common_rust_': "1. Use rust-resistant corn varieties.\n2. Apply fungicide if severe.\n3. Maintain proper field hygiene.",
-    'Corn_(maize)___Northern_Leaf_Blight': "1. Use certified seeds.\n2. Rotate crops and remove debris.\n3. Apply foliar fungicide.",
-    'Corn_(maize)___healthy': "No treatment needed. The corn is healthy! ✅",
-    'Grape___Black_rot': "1. Prune infected vines.\n2. Use protective fungicide sprays.\n3. Avoid overhead irrigation.",
-    'Grape___Esca_(Black_Measles)': "1. Remove infected vines.\n2. Avoid pruning during wet weather.\n3. Use clean pruning tools.",
-    'Grape___Leaf_blight_(Isariopsis_Leaf_Spot)': "1. Remove infected leaves.\n2. Use fungicide sprays.\n3. Improve airflow in the vineyard.",
-    'Grape___healthy': "No treatment needed. The grapevine is healthy! ✅",
-    'Potato___Early_blight': "1. Use certified disease-free seed.\n2. Apply fungicides.\n3. Practice crop rotation.",
-    'Potato___Late_blight': "1. Use blight-resistant varieties.\n2. Apply copper-based fungicides.\n3. Destroy infected plants immediately.",
-    'Potato___healthy': "No treatment needed. The potato plant is healthy! ✅",
-    'Tomato___Early_blight': "1. Remove lower infected leaves.\n2. Apply chlorothalonil or copper fungicide.\n3. Rotate crops regularly.",
-    'Tomato___Late_blight': "1. Remove and destroy infected plants.\n2. Apply fungicide every 7–10 days.\n3. Avoid overhead watering.",
-    'Tomato___Tomato_Yellow_Leaf_Curl_Virus': "1. Use virus-resistant tomato varieties.\n2. Control whiteflies.\n3. Remove infected plants immediately.",
-    'Tomato___healthy': "No treatment needed. The tomato plant is healthy! ✅"
+    'Apple___Apple_scab': [
+        "Prune and remove infected leaves and twigs.",
+        "Apply fungicide early in the season (e.g., captan, myclobutanil).",
+        "Choose resistant apple varieties.",
+        "Avoid overhead watering to keep foliage dry.",
+        "Rake and destroy fallen leaves in autumn."
+    ],
+    'Apple___Black_rot': [
+        "Remove mummified fruit and cankers from branches.",
+        "Prune out dead or infected wood.",
+        "Apply a copper-based fungicide at bloom and early fruiting.",
+        "Ensure good air circulation through pruning and spacing.",
+        "Sanitize pruning tools between cuts."
+    ],
+    'Apple___Cedar_apple_rust': [
+        "Remove or distance nearby cedar trees if possible.",
+        "Apply fungicide (e.g., myclobutanil) before symptoms appear in spring.",
+        "Repeat fungicide every 7–10 days during early season.",
+        "Choose rust-resistant apple cultivars."
+    ],
+    'Apple___healthy': [
+        "No action needed. The plant is healthy! ✅"
+    ],
+
+    'Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot': [
+        "Rotate crops with non-host species.",
+        "Use resistant hybrids or cultivars.",
+        "Apply fungicides at early signs (e.g., strobilurins or triazoles).",
+        "Avoid excessive nitrogen fertilization.",
+        "Maintain balanced plant spacing for airflow."
+    ],
+    'Corn_(maize)___Common_rust_': [
+        "Use rust-resistant corn varieties.",
+        "Apply fungicide if rust appears severe.",
+        "Maintain proper field hygiene and destroy crop residues.",
+        "Rotate crops annually.",
+        "Scout fields regularly during early growth stages."
+    ],
+    'Corn_(maize)___Northern_Leaf_Blight': [
+        "Use certified disease-free seeds.",
+        "Rotate crops and remove infected debris.",
+        "Apply foliar fungicides (e.g., azoxystrobin) at V6–VT stages.",
+        "Ensure adequate plant spacing.",
+        "Monitor regularly during wet, cool weather."
+    ],
+    'Corn_(maize)___healthy': [
+        "No treatment needed. The corn is healthy! ✅"
+    ],
+
+    'Grape___Black_rot': [
+        "Prune and destroy infected vines and fruit mummies.",
+        "Use protective fungicide sprays during bloom and early fruit stages.",
+        "Avoid overhead irrigation.",
+        "Maintain good canopy airflow.",
+        "Remove fallen leaves and fruit from vineyard floor."
+    ],
+    'Grape___Esca_(Black_Measles)': [
+        "Remove and destroy infected vines.",
+        "Avoid pruning during wet or humid weather.",
+        "Use sanitized, sharp pruning tools.",
+        "Do not replant vines in heavily infected soil.",
+        "Improve drainage and reduce vine stress."
+    ],
+    'Grape___Leaf_blight_(Isariopsis_Leaf_Spot)': [
+        "Remove and destroy infected leaves and canes.",
+        "Use fungicide sprays like mancozeb or copper formulations.",
+        "Improve vineyard airflow through pruning and spacing.",
+        "Irrigate at base, not foliage.",
+        "Monitor regularly during damp seasons."
+    ],
+    'Grape___healthy': [
+        "No treatment needed. The grapevine is healthy! ✅"
+    ],
+
+    'Potato___Early_blight': [
+        "Use certified disease-free seed tubers.",
+        "Apply fungicides such as chlorothalonil or mancozeb.",
+        "Practice crop rotation every 2–3 years.",
+        "Remove and destroy infected foliage promptly.",
+        "Avoid overhead watering and ensure proper drainage."
+    ],
+    'Potato___Late_blight': [
+        "Use blight-resistant potato varieties.",
+        "Apply copper-based fungicides regularly during humid weather.",
+        "Destroy infected plants immediately to prevent spread.",
+        "Ensure good field drainage and avoid overwatering.",
+        "Remove and destroy volunteer potato plants."
+    ],
+    'Potato___healthy': [
+        "No treatment needed. The potato plant is healthy! ✅"
+    ],
+
+    'Tomato___Early_blight': [
+        "Remove and destroy lower infected leaves.",
+        "Apply fungicides such as chlorothalonil or copper-based sprays.",
+        "Rotate crops regularly to prevent buildup of pathogens.",
+        "Mulch around plants to reduce soil splash.",
+        "Avoid overhead watering."
+    ],
+    'Tomato___Late_blight': [
+        "Remove and destroy infected plants immediately.",
+        "Apply fungicide every 7–10 days during conditions favorable to the disease.",
+        "Avoid overhead watering and irrigate early in the day.",
+        "Practice crop rotation and use disease-free seed.",
+        "Improve air circulation with proper spacing."
+    ],
+    'Tomato___Tomato_Yellow_Leaf_Curl_Virus': [
+        "Use virus-resistant tomato varieties when available.",
+        "Control whitefly populations using insecticides or traps.",
+        "Remove and destroy infected plants promptly.",
+        "Use reflective mulches to repel whiteflies.",
+        "Implement crop-free periods to break the virus cycle."
+    ],
+    'Tomato___healthy': [
+        "No treatment needed. The tomato plant is healthy! ✅"
+    ]
 }
 
 
