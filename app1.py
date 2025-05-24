@@ -40,6 +40,30 @@ image_s = [
     "apple_cedar_ar.jpeg"
 ]
 
+# Cure steps dictionary
+cure_steps = {
+    'Apple___Apple_scab': "1. Prune infected leaves.\n2. Apply fungicide early in the season.\n3. Choose resistant apple varieties.",
+    'Apple___Black_rot': "1. Remove mummified fruit and dead wood.\n2. Apply a copper-based fungicide.\n3. Ensure good air circulation.",
+    'Apple___Cedar_apple_rust': "1. Remove nearby cedar trees.\n2. Use sulfur or myclobutanil sprays.\n3. Apply fungicide before symptoms appear.",
+    'Apple___healthy': "No action needed. The plant is healthy! ✅",
+    'Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot': "1. Rotate crops regularly.\n2. Use resistant hybrids.\n3. Apply fungicides at early signs.",
+    'Corn_(maize)___Common_rust_': "1. Use rust-resistant corn varieties.\n2. Apply fungicide if severe.\n3. Maintain proper field hygiene.",
+    'Corn_(maize)___Northern_Leaf_Blight': "1. Use certified seeds.\n2. Rotate crops and remove debris.\n3. Apply foliar fungicide.",
+    'Corn_(maize)___healthy': "No treatment needed. The corn is healthy! ✅",
+    'Grape___Black_rot': "1. Prune infected vines.\n2. Use protective fungicide sprays.\n3. Avoid overhead irrigation.",
+    'Grape___Esca_(Black_Measles)': "1. Remove infected vines.\n2. Avoid pruning during wet weather.\n3. Use clean pruning tools.",
+    'Grape___Leaf_blight_(Isariopsis_Leaf_Spot)': "1. Remove infected leaves.\n2. Use fungicide sprays.\n3. Improve airflow in the vineyard.",
+    'Grape___healthy': "No treatment needed. The grapevine is healthy! ✅",
+    'Potato___Early_blight': "1. Use certified disease-free seed.\n2. Apply fungicides.\n3. Practice crop rotation.",
+    'Potato___Late_blight': "1. Use blight-resistant varieties.\n2. Apply copper-based fungicides.\n3. Destroy infected plants immediately.",
+    'Potato___healthy': "No treatment needed. The potato plant is healthy! ✅",
+    'Tomato___Early_blight': "1. Remove lower infected leaves.\n2. Apply chlorothalonil or copper fungicide.\n3. Rotate crops regularly.",
+    'Tomato___Late_blight': "1. Remove and destroy infected plants.\n2. Apply fungicide every 7–10 days.\n3. Avoid overhead watering.",
+    'Tomato___Tomato_Yellow_Leaf_Curl_Virus': "1. Use virus-resistant tomato varieties.\n2. Control whiteflies.\n3. Remove infected plants immediately.",
+    'Tomato___healthy': "No treatment needed. The tomato plant is healthy! ✅"
+}
+
+
 # Sidebar navigation
 st.sidebar.title("MENU")
 page = st.sidebar.selectbox("", ["Home", "About"])
@@ -110,13 +134,21 @@ if page == "Home":
             img_resized = img.resize((224, 224))
             img_array = image.img_to_array(img_resized)
             img_array = np.expand_dims(img_array, axis=0) / 255.0
-    
+        
             predictions = model.predict(img_array)
             predicted_class = class_names[np.argmax(predictions[0])]
             confidence = float(np.max(predictions[0]))
-    
+        
             st.success(f"🌾 Prediction: **{predicted_class}**")
             st.info(f"🧠 Confidence: **{confidence * 100:.2f}%**")
+            
+            # Display cure steps
+            if predicted_class in cure_steps:
+                st.markdown("### 🌱 Recommended Cure Steps:")
+                st.markdown(f"```markdown\n{cure_steps[predicted_class]}\n```")
+            else:
+                st.warning("No treatment steps found for this class.")
+
 
 
 # About page
